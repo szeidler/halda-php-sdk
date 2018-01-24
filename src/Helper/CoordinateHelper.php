@@ -18,7 +18,7 @@ class CoordinateHelper
      * @return int
      *   Coordinate as an integer.
      */
-    public static function convertDecimalCoordinateToExpectedFormat($value, Parameter $parameter)
+    public static function convertDecimalCoordinateToExpectedFormat($value, Parameter $parameter = null)
     {
         return (int)($value * 100000);
     }
