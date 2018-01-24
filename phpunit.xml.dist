@@ -3,7 +3,7 @@
 <phpunit colors="true" bootstrap="./vendor/autoload.php">
     <php>
         <env name="BASE_URL" value="https://www.halda.se/HaldaAppService/AppService.svc"/>
-        <env name="API_CODE" value="Azd9kDr2V"/>
+        <env name="API_CODE" value="Azd9kDr2v"/>
     </php>
     <testsuites>
         <testsuite name="Halda PHP SDK Test Suite">
