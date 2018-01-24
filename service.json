@@ -1,0 +1,198 @@
+{
+  "name": "Halda API",
+  "apiVersion": "V1",
+  "baseUrl": "https://www.halda.se/HaldaAppService/AppService.svc",
+  "description": "API for accessing the Halda Taximeter API.",
+  "operations": {
+    "test": {
+      "httpMethod": "POST",
+      "uri": "/Test",
+      "responseModel": "BaseResponse",
+      "summary": "Test the client authentication."
+    },
+    "createUser": {
+      "httpMethod": "POST",
+      "uri": "/CreateUser",
+      "summary": "Use this method to create a new user in the system. If the user already exist (email) then a message will be returned letting the user knowing the address already exist in the database.  If the address is not already created then it will be created.",
+      "responseModel": "BaseResponse",
+      "parameters": {
+        "Emailaddress": {
+          "type": "string",
+          "location": "json",
+          "required": true,
+          "maxLength": 150
+        },
+        "Password": {
+          "type": "string",
+          "location": "json",
+          "required": true,
+          "maxLength": 25
+        },
+        "PhoneNumber": {
+          "type": "string",
+          "location": "json",
+          "required": true,
+          "maxLength": 50
+        },
+        "Name": {
+          "type": "string",
+          "location": "json",
+          "required": true,
+          "maxLength": 50
+        }
+      }
+    },
+    "loginUser": {
+      "httpMethod": "POST",
+      "uri": "/LoginUser",
+      "summary": "This method is used to login a subscribed user.",
+      "responseModel": "BaseResponse",
+      "parameters": {
+        "User": {
+          "type": "object",
+          "location": "json",
+          "required": true
+        }
+      }
+    },
+    "placeOrder": {
+      "httpMethod": "POST",
+      "uri": "/PlaceOrder",
+      "summary": "Used to place a Taxi order from a handheld device or phone. If the device is still connected to the service then the message will be returned with a status code. It’s important that the routes information below gets nested twice in the JSON string. It’s important to parse a start and a destination location. The address is a LIST in the server and contains two instances of the Address types.",
+      "responseModel": "BaseResponse",
+      "parameters": {
+        "NoOfSeats": {
+          "type": "integer",
+          "location": "json",
+          "required": true,
+          "description": "How many passengers"
+        },
+        "Transports": {
+          "type": "array",
+          "location": "json",
+          "required": true,
+          "items": {
+            "type": "object",
+            "$ref": "Transport"
+          },
+          "description": "The Address id for the trip. Every trip has to have at least two id, one for the start and one for the end destination."
+        },
+        "PaymentType": {
+          "type": "integer",
+          "location": "json",
+          "description": "How the order should be paid for.",
+          "default": 0
+        },
+        "DriverNote": {
+          "type": "string",
+          "location": "json",
+          "description": "Manual text for the driver or the BC."
+        },
+        "OrderAttribute": {
+          "type": "array",
+          "location": "json",
+          "required": true,
+          "description": "This is the number of attributes added to the order. See list below for all available attributes.",
+          "default": []
+        },
+        "ClientNo": {
+          "type": "integer",
+          "location": "json",
+          "description": "The Customer number in HaldaBook. Must exist in HaldaBook, otherwise no order will be created.",
+          "default": 0
+        },
+        "FixedPriceOrder": {
+          "type": "numeric",
+          "location": "json",
+          "description": "Fixed price of the order."
+        },
+        "IdExternalAgreement": {
+          "type": "string",
+          "location": "json",
+          "description": "The agreement which is mapped to a bookingtype in HaldaBook."
+        }
+      }
+    }
+  },
+  "models": {
+    "BaseResponse": {
+      "type": "object",
+      "additionalProperties": {
+        "location": "json"
+      }
+    },
+    "TransportAddress": {
+      "type": "object",
+      "properties": {
+        "IdAddress": {
+          "type": "integer",
+          "location": "json"
+        },
+        "NodeSeqNo": {
+          "type": "integer",
+          "location": "json",
+          "description": "Information about the order in which the addresses are to be visited. For each trip there has to be at least two routes. One for the start and one for the end of the trip"
+        },
+        "ActionType": {
+          "type": "integer",
+          "location": "json",
+        },
+        "LocationName": {
+          "type": "string",
+          "location": "json",
+          "description": "City"
+        },
+        "PostCodeId": {
+          "type": "string",
+          "location": "json",
+          "description": "Zip Code"
+        },
+        "StreetName": {
+          "type": "string",
+          "location": "json",
+          "description": "Address name"
+        },
+        "StreetNo": {
+          "type": "string",
+          "location": "json",
+          "description": "Address number"
+        },
+        "Longitude": {
+          "type": "numeric",
+          "location": "json",
+          "description": "Longitude WSG84"
+        },
+        "Latitude": {
+          "type": "numeric",
+          "location": "json",
+          "description": "Latitude WSG84"
+        },
+        "AddressTime": {
+          "type": "string",
+          "location": "json"
+        },
+        "RequestedLateTime": {
+          "type": "string",
+          "location": "json"
+        },
+        "ScheduledTime": {
+          "type": "string",
+          "location": "json"
+        }
+      }
+    },
+    "Transport": {
+      "type":  "object",
+      "properties": {
+        "TransportAddresses": {
+          "type":  "array",
+          "location": "json",
+          "items": {
+            "type": "object",
+            "$ref": "TransportAddress"
+          }
+        }
+      }
+    }
+  }
+}

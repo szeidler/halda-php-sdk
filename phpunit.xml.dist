@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit colors="true" bootstrap="./vendor/autoload.php">
+    <php>
+        <env name="BASE_URL" value="https://www.halda.se/HaldaAppService/AppService.svc"/>
+        <env name="API_CODE" value="Azd9kDr2V"/>
+    </php>
+    <testsuites>
+        <testsuite name="Halda PHP SDK Test Suite">
+            <directory>./tests</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./src</directory>
+        </whitelist>
+    </filter>
+</phpunit>
