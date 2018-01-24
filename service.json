@@ -160,12 +160,26 @@
         "Longitude": {
           "type": "numeric",
           "location": "json",
-          "description": "Longitude WSG84"
+          "description": "Longitude as a decimal number.",
+          "filters": {
+            "method": "Halda\\Helper\\CoordinateHelper::convertDecimalCoordinateToExpectedFormat",
+            "args": [
+              "@value",
+              "@api"
+            ]
+          }
         },
         "Latitude": {
           "type": "numeric",
           "location": "json",
-          "description": "Latitude WSG84"
+          "description": "Latitude as a decimal number.",
+          "filters": {
+            "method": "Halda\\Helper\\CoordinateHelper::convertDecimalCoordinateToExpectedFormat",
+            "args": [
+              "@value",
+              "@api"
+            ]
+          }
         },
         "AddressTime": {
           "type": "string",
