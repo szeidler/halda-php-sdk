@@ -27,7 +27,7 @@ class DateHelperTest extends TestCase
     {
         $dateHelper = new DateHelper();
         $timestamp = 1516880139;
-        $expected = "/Date(1516883739000)/";
+        $expected = "/Date(1516880139000)/";
         $this->assertEquals(
             $expected,
             $dateHelper::convertTimestampToDate($timestamp),
@@ -46,6 +46,6 @@ class DateHelperTest extends TestCase
           'filters' => ['Halda\\Helper\\DateHelper::convertTimestampToDate'],
         ];
         $parameter = new Parameter($data);
-        $this->assertEquals('/Date(1516883739000)/', $parameter->filter(1516880139));
+        $this->assertEquals('/Date(1516880139000)/', $parameter->filter(1516880139));
     }
 }
