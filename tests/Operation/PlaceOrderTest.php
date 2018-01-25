@@ -26,6 +26,7 @@ class PlaceOrderTest extends HaldaTestWrapper
           'Transports' => [
             'TransportAddresses' => [
               [
+                'Name'              => 'John Doe',
                 'NodeSeqNo'         => 1,
                 'ActionType'        => 2,
                 'LocationName'      => 'Tromsø',
@@ -38,6 +39,7 @@ class PlaceOrderTest extends HaldaTestWrapper
                 'ScheduledTime'     => 1516878017,
               ],
               [
+                'Name'              => 'John Doe',
                 'NodeSeqNo'         => 2,
                 'ActionType'        => 3,
                 'LocationName'      => 'Tromsø',

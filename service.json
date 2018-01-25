@@ -134,6 +134,11 @@
           "type": "integer",
           "location": "json"
         },
+        "Name": {
+          "type": "string",
+          "location": "json",
+          "description": "Name of the traveler."
+        },
         "NodeSeqNo": {
           "type": "integer",
           "location": "json",
