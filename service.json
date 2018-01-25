@@ -127,6 +127,23 @@
         "location": "json"
       }
     },
+    "Contact": {
+      "type": "object",
+      "properties": {
+        "ContactType": {
+          "type": "integer",
+          "location": "json",
+          "required": true,
+          "description": "Type of the contact information: mail = 1 | phone = 3, fax = 5"
+        },
+        "ContactAddress": {
+          "type": "string",
+          "location": "json",
+          "required": true,
+          "description": "The actual contact information, e.g. phone number."
+        }
+      }
+    },
     "TransportAddress": {
       "type": "object",
       "properties": {
@@ -239,6 +256,14 @@
               ]
             }
           ]
+        },
+        "Contact": {
+          "type": "array",
+          "location": "json",
+          "items": {
+            "type": "object",
+            "$ref": "Contact"
+          }
         }
       }
     }
