@@ -68,12 +68,18 @@
           "description": "How many passengers"
         },
         "Transports": {
-          "type": "array",
+          "type": "object",
           "location": "json",
           "required": true,
-          "items": {
-            "type": "object",
-            "$ref": "Transport"
+          "properties": {
+            "TransportAddresses": {
+              "type": "array",
+              "location": "json",
+              "items": {
+                "type": "object",
+                "$ref": "TransportAddress"
+              }
+            }
           },
           "description": "The Address id for the trip. Every trip has to have at least two id, one for the start and one for the end destination."
         },
@@ -131,15 +137,18 @@
         "NodeSeqNo": {
           "type": "integer",
           "location": "json",
+          "required": true,
           "description": "Information about the order in which the addresses are to be visited. For each trip there has to be at least two routes. One for the start and one for the end of the trip"
         },
         "ActionType": {
           "type": "integer",
-          "location": "json",
+          "required": true,
+          "location": "json"
         },
         "LocationName": {
           "type": "string",
           "location": "json",
+          "required": true,
           "description": "City"
         },
         "PostCodeId": {
@@ -150,61 +159,65 @@
         "StreetName": {
           "type": "string",
           "location": "json",
+          "required": true,
           "description": "Address name"
         },
         "StreetNo": {
           "type": "string",
           "location": "json",
+          "required": true,
           "description": "Address number"
-        },
-        "Longitude": {
-          "type": "numeric",
-          "location": "json",
-          "description": "Longitude as a decimal number.",
-          "filters": {
-            "method": "Halda\\Helper\\CoordinateHelper::convertDecimalCoordinateToExpectedFormat",
-            "args": [
-              "@value",
-              "@api"
-            ]
-          }
         },
         "Latitude": {
           "type": "numeric",
           "location": "json",
+          "required": true,
           "description": "Latitude as a decimal number.",
-          "filters": {
-            "method": "Halda\\Helper\\CoordinateHelper::convertDecimalCoordinateToExpectedFormat",
-            "args": [
-              "@value",
-              "@api"
-            ]
-          }
+          "filters": [
+            {
+              "method": "Halda\\Helper\\CoordinateHelper::convertDecimalCoordinateToExpectedFormat",
+              "args": [
+                "@value"
+              ]
+            }
+          ]
+        },
+        "Longitude": {
+          "type": "numeric",
+          "location": "json",
+          "required": true,
+          "description": "Longitude as a decimal number.",
+          "filters": [
+            {
+              "method": "Halda\\Helper\\CoordinateHelper::convertDecimalCoordinateToExpectedFormat",
+              "args": [
+                "@value"
+              ]
+            }
+          ]
         },
         "AddressTime": {
           "type": "string",
-          "location": "json"
+          "required": true,
+          "location": "json",
+          "filters": [
+            {
+              "method": "Halda\\Helper\\DateHelper::convertTimestampToDate",
+              "args": [
+                "@value"
+              ]
+            }
+          ]
         },
         "RequestedLateTime": {
           "type": "string",
+          "required": true,
           "location": "json"
         },
         "ScheduledTime": {
           "type": "string",
+          "required": true,
           "location": "json"
-        }
-      }
-    },
-    "Transport": {
-      "type":  "object",
-      "properties": {
-        "TransportAddresses": {
-          "type":  "array",
-          "location": "json",
-          "items": {
-            "type": "object",
-            "$ref": "TransportAddress"
-          }
         }
       }
     }

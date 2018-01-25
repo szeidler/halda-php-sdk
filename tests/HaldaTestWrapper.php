@@ -15,10 +15,10 @@ class HaldaTestWrapper extends TestCase
         parent::setUp();
 
         $this->client = new HaldaClient(
-          [
+            [
             'baseUrl'  => getenv('BASE_URL'),
             'code' => getenv('API_CODE'),
-          ]
+            ]
         );
     }
 }

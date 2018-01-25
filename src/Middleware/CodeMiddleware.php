@@ -4,6 +4,11 @@ namespace Halda\Middleware;
 
 use Psr\Http\Message\RequestInterface;
 
+/**
+ * Class CodeMiddleware
+ *
+ * @package Halda\Middleware
+ */
 class CodeMiddleware
 {
 

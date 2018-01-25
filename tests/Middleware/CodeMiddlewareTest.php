@@ -29,8 +29,10 @@ class CodeMiddlewareTest extends HaldaTestWrapper
         $this->assertEquals($code, $middleware->getCode(), 'The code getter must return the right code.');
 
         $middleware = new CodeMiddleware();
-        $this->assertNull($middleware->getCode(),
-          'The code getter must return null, when it was initialized without a code.');
+        $this->assertNull(
+            $middleware->getCode(),
+            'The code getter must return null, when it was initialized without a code.'
+        );
     }
 
     /**

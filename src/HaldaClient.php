@@ -130,5 +130,4 @@ class HaldaClient extends GuzzleClient
 
         return $stack;
     }
-
 }

@@ -34,15 +34,18 @@ class HaldaClientTest extends HaldaTestWrapper
 
         // Inject the custom client as configuration into the HaldaClient.
         $client = new HaldaClient(
-          [
+            [
             'client'  => $custom_client,
             'baseUrl' => getenv('BASE_URL'),
             'code'    => getenv('API_CODE'),
-          ]
+            ]
         );
 
-        $this->assertEquals($custom_client, $client->getHttpClient(),
-          'The HaldaClient must return the base_uri of the injected Client.');
+        $this->assertEquals(
+            $custom_client,
+            $client->getHttpClient(),
+            'The HaldaClient must return the base_uri of the injected Client.'
+        );
     }
 
     /**
@@ -57,17 +60,23 @@ class HaldaClientTest extends HaldaTestWrapper
 
         // Inject the custom client as configuration into the HaldaClient.
         $client = new HaldaClient(
-          [
+            [
             'baseUrl'       => getenv('BASE_URL'),
             'code'          => getenv('API_CODE'),
             'client_config' => $client_config,
-          ]
+            ]
         );
 
-        $this->assertEquals($timeout, $client->getHttpClient()->getConfig('timeout'),
-          'The HaldaClient must return the timeout value of the client configuration');
-        $this->assertEquals($proxy, $client->getHttpClient()->getConfig('proxy'),
-          'The HaldaClient must return the proxy value of the client configuration');
+        $this->assertEquals(
+            $timeout,
+            $client->getHttpClient()->getConfig('timeout'),
+            'The HaldaClient must return the timeout value of the client configuration'
+        );
+        $this->assertEquals(
+            $proxy,
+            $client->getHttpClient()->getConfig('proxy'),
+            'The HaldaClient must return the proxy value of the client configuration'
+        );
     }
 
     /**
@@ -81,11 +90,11 @@ class HaldaClientTest extends HaldaTestWrapper
 
         // Inject the custom client as configuration into the HaldaClient.
         $client = new HaldaClient(
-          [
+            [
             'baseUrl'       => getenv('BASE_URL'),
             'code'          => getenv('API_CODE'),
             'client_config' => $client_config,
-          ]
+            ]
         );
     }
 
@@ -125,19 +134,24 @@ class HaldaClientTest extends HaldaTestWrapper
 
         // Inject the custom description as configuration into the HaldaClient.
         $client = new HaldaClient(
-          [
+            [
             'description' => $description,
             'baseUrl'     => getenv('BASE_URL'),
             'code'        => getenv('API_CODE'),
-          ]
+            ]
         );
 
-        $this->assertEquals($description, $client->getDescription(),
-          'The description must return the injected description.');
+        $this->assertEquals(
+            $description,
+            $client->getDescription(),
+            'The description must return the injected description.'
+        );
 
-        $this->assertInstanceOf('GuzzleHttp\Command\ResultInterface',
-          $client->testing(['foo' => 'bar', 'bar' => 'foo']),
-          'The response must be instance of GuzzleHttp\Command\ResultInterface.');
+        $this->assertInstanceOf(
+            'GuzzleHttp\Command\ResultInterface',
+            $client->testing(['foo' => 'bar', 'bar' => 'foo']),
+            'The response must be instance of GuzzleHttp\Command\ResultInterface.'
+        );
     }
 
     /**
@@ -148,9 +162,9 @@ class HaldaClientTest extends HaldaTestWrapper
     public function testMissingBaseUrlInClientConfiguration()
     {
         $client = new HaldaClient(
-          [
+            [
             'code' => getenv('API_CODE'),
-          ]
+            ]
         );
     }
 
@@ -162,9 +176,9 @@ class HaldaClientTest extends HaldaTestWrapper
     public function testMissingApiKeyInClientConfiguration()
     {
         $client = new HaldaClient(
-          [
+            [
             'baseUrl' => 'http://httpbin.org/',
-          ]
+            ]
         );
         $client->getHttpClient()->request('/');
     }
