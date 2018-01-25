@@ -28,8 +28,11 @@ class CodeMiddlewareTest extends TestCase
         $coordinateHelper = new CoordinateHelper();
         $coordinate = 62.1241240;
         $expected = 6212412;
-        $this->assertEquals($expected, $coordinateHelper::convertDecimalCoordinateToExpectedFormat($coordinate),
-          'The converted coordinate should match the expected value.');
+        $this->assertEquals(
+            $expected,
+            $coordinateHelper::convertDecimalCoordinateToExpectedFormat($coordinate),
+            'The converted coordinate should match the expected value.'
+        );
     }
 
     /**
