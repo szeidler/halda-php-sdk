@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  * @package Halda\Tests\Helper
  * @see     \Halda\Helper\CoordinateHelper
  */
-class CodeMiddlewareTest extends TestCase
+class CoordinateHelperTest extends TestCase
 {
 
     public function setUp()
