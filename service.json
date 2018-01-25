@@ -212,12 +212,28 @@
         "RequestedLateTime": {
           "type": "string",
           "required": true,
-          "location": "json"
+          "location": "json",
+          "filters": [
+            {
+              "method": "Halda\\Helper\\DateHelper::convertTimestampToDate",
+              "args": [
+                "@value"
+              ]
+            }
+          ]
         },
         "ScheduledTime": {
           "type": "string",
           "required": true,
-          "location": "json"
+          "location": "json",
+          "filters": [
+            {
+              "method": "Halda\\Helper\\DateHelper::convertTimestampToDate",
+              "args": [
+                "@value"
+              ]
+            }
+          ]
         }
       }
     }
