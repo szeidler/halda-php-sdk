@@ -2,6 +2,7 @@
 
 namespace Halda\Middleware;
 
+use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -35,7 +36,7 @@ class CodeMiddleware
     public function __invoke(callable $handler)
     {
         return function (RequestInterface $request, array $options) use (&$handler) {
-            $request = $this->applyToken($request);
+            $request = $this->applyCode($request);
             return $handler($request, $options);
         };
     }
@@ -78,16 +79,30 @@ class CodeMiddleware
     }
 
     /**
-     * Applies the code to the request.
+     * Applies the code to the request. Halda requires it to send it as a json body property.
      *
      * @param \Psr\Http\Message\RequestInterface $request
      *
-     * @return static
+     * @return RequestInterface
+     *   Request with code injected body.
      */
-    protected function applyToken(RequestInterface $request)
+    protected function applyCode(RequestInterface $request)
     {
-        $token = $this->getCode();
-        $this->validateCode($token);
-        return $request->withHeader('Code', $this->getCode());
+        $code = $this->getCode();
+        $this->validateCode($code);
+
+        // Get the current request body.
+        $body = $request->getBody()->getContents();
+
+        // Decode the body, inject the code and encode to json again.
+        if ($json = json_decode($body, true)) {
+            $json['Code'] = $code;
+            $body = json_encode($json);
+        }
+
+        // Build a stream for the request body and modify the request.
+        $stream = Psr7\stream_for($body);
+
+        return $request->withBody($stream);
     }
 }

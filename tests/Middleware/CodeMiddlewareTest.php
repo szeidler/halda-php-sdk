@@ -2,6 +2,7 @@
 
 namespace Halda\Tests\Middleware;
 
+use Halda\HaldaClient;
 use Halda\Middleware\CodeMiddleware;
 use Halda\Tests\HaldaTestWrapper;
 
@@ -30,8 +31,8 @@ class CodeMiddlewareTest extends HaldaTestWrapper
 
         $middleware = new CodeMiddleware();
         $this->assertNull(
-            $middleware->getCode(),
-            'The code getter must return null, when it was initialized without a code.'
+          $middleware->getCode(),
+          'The code getter must return null, when it was initialized without a code.'
         );
     }
 
@@ -91,5 +92,31 @@ class CodeMiddlewareTest extends HaldaTestWrapper
     {
         $middleware = new CodeMiddleware();
         $this->assertTrue($middleware->validateCode($token), 'The token must be valid.');
+    }
+
+    /**
+     * Tests, that the Halda Client request uses the injected authentication code.
+     */
+    public function testThatHaldaClientRequestIncludesCode()
+    {
+        $client = new HaldaClient(
+          [
+            'baseUrl' => getenv('BASE_URL'),
+            'code'    => getenv('API_CODE'),
+          ]
+        );
+
+        // Build json data to be sent.
+        $data = json_encode(['x' => 1, 'y' => 2, 'z' => 3]);
+        $response = $client->getHttpClient()
+          ->post('http://httpbin.org/post', ['body' => $data, 'headers' => ['Content-Type' => 'application/json']]);
+
+        // Decode the response.
+        $body = (string)$response->getBody();
+        $json = json_decode($body, true);
+
+        // Check that the code was transferred with the request and matches the configuration.
+        $this->assertArrayHasKey('Code', $json['json'], 'The response must include the code.');
+        $this->assertEquals(getenv('API_CODE'), $json['json']['Code'], 'The send code must match the configured code.');
     }
 }
