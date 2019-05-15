@@ -118,6 +118,32 @@
           "description": "The agreement which is mapped to a bookingtype in HaldaBook."
         }
       }
+    },
+    "cancelOrder": {
+      "httpMethod": "POST",
+      "uri": "/CancelOrder",
+      "summary": "Used to cancel the order at HaldaBook.",
+      "responseModel": "BaseResponse",
+      "parameters": {
+        "Orderid": {
+          "type": "numeric",
+          "location": "json",
+          "description": "The order id to be canceled."
+        }
+      }
+    },
+    "lookupOrder": {
+      "httpMethod": "POST",
+      "uri": "/LookupOrder",
+      "summary": "Used to lookup an order and its status. The message is formatted with a unique response code, i.e. 2001 for order ok.",
+      "responseModel": "BaseResponse",
+      "parameters": {
+        "Orderid": {
+          "type": "numeric",
+          "location": "json",
+          "description": "The order id to be canceled."
+        }
+      }
     }
   },
   "models": {
